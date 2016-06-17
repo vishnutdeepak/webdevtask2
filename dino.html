@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="1000" height="500"
+     style="border:0px solid #FFF000;
+     background-color:#000000"></canvas>
+    <script>
+var check;
+var score=0;        
+
+
+
+
+
+
+
+      
+      window.requestAnimFrame = (function(callback) {
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+        function(callback) {
+          window.setTimeout(callback, 1000 / 60);
+        };
+      })();
+
+
+      function drawRectangle(myRectangle, context) {
+        context.beginPath();
+        context.rect(myRectangle.x, myRectangle.y, myRectangle.width, myRectangle.height);
+        context.fillStyle = '#FF0000';
+        context.fill();
+        context.lineWidth = myRectangle.borderWidth;
+        context.strokeStyle = 'black';
+        context.stroke();
+          if(myRectangle.x<74&&myRectangle.x>23)
+              {
+                  if(myCircle.y+25>myRectangle.y)
+                     { score=score/10;
+                         alert("GAME OVER \n SCORE: " + score.toFixed(0));
+                         
+                      }
+              }
+                
+
+      }
+    
+      function drawCircle(myCircle, context) {
+       
+       
+        context.beginPath();
+        context.arc(myCircle.x,myCircle.y,myCircle.r,myCircle.sAngle,myCircle.eAngle);
+        context.fillStyle = '#8ED6FE';
+        context.fill();
+        context.strokeStyle = 'black';
+        context.stroke();
+        context.beginPath();
+      }
+function slide(myRectangle,canvas,context,Stime) {
+    score++;
+
+var time2 = (new Date()).getTime() - Stime;
+var ls = 300;
+var newX = (ls*time2/1000)%1000;
+ if(newX < canvas.width - myRectangle.width)
+myRectangle.x=canvas.width-newX-50;
+//alert(time2);
+context.clearRect(myRectangle.x,myRectangle.y,myRectangle.width,myRectangle.height);
+context.clearRect(0, 0, canvas.width, canvas.height);
+drawCircle(myCircle,context);    
+    context.strokeStyle= 'black';
+
+
+    context.moveTo(0,250);
+      context.lineTo(1000,250);
+      context.strokeStyle= 'white';
+      context.stroke();
+    drawRectangle(myRectangle,context);
+   
+        
+    
+
+requestAnimFrame(function(){
+ slide(myRectangle,canvas,context,Stime);
+});
+    return;
+}
+
+setTimeout(function(){var Stime = (new Date()).getTime();
+                      
+slide(myRectangle,canvas,context,Stime);},1000);
+        
+        
+        window.addEventListener("keydown", myFunction);
+
+function myFunction(e) {
+
+    if(e.keyCode==32)
+{  
+var startTime=(new Date()).getTime();
+    var Stime = (new Date()).getTime();
+    
+
+
+  animate(myCircle, canvas, context, startTime);
+
+
+
+
+
+}
+
+
+
+}
+      function animate(myCircle, canvas, context, startTime) {
+        // update
+        
+         check=1;
+        
+        var time = (new Date()).getTime() - startTime;
+        var linearSpeed = 500;
+        // pixels / second
+        var newY = (linearSpeed * time / 1000)+225;
+      
+
+        if(newY > (canvas.height/2+25)&&canvas.height-newY>50&&check==1) {
+          myCircle.y = canvas.height-newY;
+          
+        }
+
+        
+         if(canvas.height-newY-50<5)
+        {
+         
+          
+          myCircle.y=(100+newY-canvas.height)%235;
+          if(myCircle.y>=220.0)
+          check=0;
+        
+        
+          
+
+        }
+         
+        // clear
+        context.clearRect(0, 0, canvas.width, canvas.height);
+          drawRectangle(myRectangle,context);
+        context.moveTo(0,250);
+      context.lineTo(1000,250);
+      context.strokeStyle= 'white';
+      context.stroke(); 
+
+        
+          
+           drawCircle(myCircle, context);
+           
+          
+        
+         
+        // request new frame
+        if(check==1)
+        {requestAnimFrame(function() {
+          animate(myCircle, canvas, context, startTime);
+        });
+         
+       }    
+       else return;
+      }
+      var canvas = document.getElementById('myCanvas');
+      
+      var context = canvas.getContext('2d');
+      
+     
+      context.moveTo(0,252);
+      context.lineTo(1000,252);
+      context.strokeStyle= 'white';
+    
+      context.stroke();
+     
+  
+    /*  context.rect(900,200,50,50);
+       
+       context.fillStyle = '#FF0000';
+           context.fill();
+context.stroke();
+     
+     */
+
+
+      
+
+      
+
+      var myCircle = {
+     x:50,
+     y:225,
+     r:25,
+     sAngle:0,
+     eAngle:2*Math.PI
+
+      };
+
+     var myRectangle = {
+     x: 900,
+     y: 200,
+     width: 5,  
+     height: 50
+     
+};
+       
+      drawRectangle(myRectangle,context);
+
+      drawCircle(myCircle, context);
+  
+
+
+
+    </script>
+  </body>
+</html>     
